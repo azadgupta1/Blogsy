@@ -1,3 +1,6 @@
-const hey = "Hello bro";
+const a = 20;
+const b = 40;
 
-console.log("I am your dad");
+const c = a+b;
+
+console.log("Addition of two number is : "+c);
