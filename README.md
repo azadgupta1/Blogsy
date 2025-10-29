@@ -4,6 +4,6 @@ let b = 'c';
 let ans = a + b + c;
 
 d = e + 7;
-
+e = c+d;
 console.log(ans);
 
