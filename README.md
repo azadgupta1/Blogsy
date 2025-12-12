@@ -1,9 +1,4 @@
 a = b + c;
 
-console.log(a);
+console.log(f);
 
-let a;
-let b = 4;
-let c = 5;
-
-let d = e;
