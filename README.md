@@ -1,4 +1,5 @@
-a = b + c;
+let c = d;
 
-console.log(f);
+d = 10;
 
+console.log(w);
