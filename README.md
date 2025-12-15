@@ -5,3 +5,4 @@ d = 10;
 console.log(w);
 console.log(h);
 
+e = f + g;
