@@ -1,3 +1,3 @@
-let b = 40;
+a = 50;
 
-b = c + d;
+const a = 70;
