@@ -1,8 +1,9 @@
-let c = d;
+let a = 10;
 
-d = 10;
+let b = 20;
 
-console.log(w);
-console.log(h);
 
-e = f + g;
+c = a + b;
+
+
+console.log(c);
