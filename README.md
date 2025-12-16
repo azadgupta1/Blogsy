@@ -1,9 +1,5 @@
 let a = 10;
 
-let b = 20;
+let a = 20;
 
-
-c = a + b;
-
-
-console.log(c);
+20 = a;
