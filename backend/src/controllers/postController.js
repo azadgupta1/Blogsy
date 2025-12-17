@@ -4,6 +4,8 @@ import prisma from "../config/db.js";
 export const createPost = async (req, res) => {
     const { title, content } = req.body;
 
+    const hector = title + content + hey;
+
     try {
         const create = await prisma.post.create({
             data: {
