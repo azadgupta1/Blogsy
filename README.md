@@ -1,5 +1,5 @@
 a = 50;
-
+a = b;
 const a = 70;
 
 console.log(b);
