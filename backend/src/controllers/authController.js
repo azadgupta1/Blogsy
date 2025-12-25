@@ -1,6 +1,7 @@
 import prisma from "../config/db.js";
 import bcrypt from 'bcrypt';
-import { json } from "express";
+// The 'json' import from 'express' is not used in this file, so it can be removed.
+// import { json } from "express"; 
 import jwt from 'jsonwebtoken';
 
 
@@ -19,13 +20,18 @@ export const registerUser = async (req, res) =>{
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
+        // BUG FIX: The 'password' field in prisma.user.create was storing the plain password
+        // from req.body. It should store the 'hashedPassword'.
         const createUser = await prisma.user.create({
             data: {
                 email,
-                password,
+                password: hashedPassword, // Store the hashed password
             }
         });
 
+        // For security and best practice, avoid returning the user object directly after creation,
+        // especially one that might contain sensitive data, unless specifically required.
+        // A simple success message is usually sufficient for registration.
         res.status(201).json({message: "User created successfully!"});
 
     }catch(error){
@@ -40,21 +46,26 @@ export const loginUser = async (req, res) =>{
 
 
     try{
-        const userExist = await prisma.user.findUnique({
+        const user = await prisma.user.findUnique({ // Renamed 'userExist' to 'user' for clarity
             where: {email},
         });
 
-        if(!userExist){
-            return res.status(404).json({message: "Invalid Credentials!"});
+        if(!user){
+            // Return a generic "Invalid Credentials" message for security,
+            // to avoid leaking whether the email exists or not.
+            return res.status(401).json({message: "Invalid Credentials!"}); 
         }
 
-        const isValidPassword = await bcrypt.compare(password, userExist.password);
+        const isValidPassword = await bcrypt.compare(password, user.password);
 
         if(!isValidPassword){
-            return res.status(404).json({message: "Invalid Credentials!"});
+            // Return a generic "Invalid Credentials" message.
+            return res.status(401).json({message: "Invalid Credentials!"});
         }
 
-        const token = jwt.sign({userId: userExist.id}, process.env.JWT_SECRET, {expiresIn: "1h"});
+        // Ensure process.env.JWT_SECRET is properly loaded in your application's entry point (e.g., server.js)
+        // using a library like 'dotenv'.
+        const token = jwt.sign({userId: user.id}, process.env.JWT_SECRET, {expiresIn: "1h"});
 
         res.status(200).json({message: "User logged in Successfully", token});
 
