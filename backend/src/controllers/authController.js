@@ -5,7 +5,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 const num = 10;
-const num2 = 40;
+const num2 = 20;
+
+const num3 = 30;
 
 export const registerUser = async (req, res) =>{
     const { email, password } = req.body;
