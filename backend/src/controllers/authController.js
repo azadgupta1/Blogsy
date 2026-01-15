@@ -4,10 +4,11 @@ import bcrypt from 'bcrypt';
 // import { json } from "express"; 
 import jwt from 'jsonwebtoken';
 
+const num = 10;
 
 export const registerUser = async (req, res) =>{
     const { email, password } = req.body;
-
+    num = email;
 
     try{
         const userExist = await prisma.user.findUnique({
